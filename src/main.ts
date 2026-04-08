@@ -4,6 +4,7 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { v4 as uuidv4 } from "uuid";
 import { getConfig, ensureConfigDirs } from "./config/index.js";
+import { loadDotEnv } from "./config/envFile.js";
 import { SYSTEM_PROMPT, injectContext } from "./context/systemPrompt.js";
 import {
   loadSkills,
@@ -126,6 +127,8 @@ async function runPrintMode(
 }
 
 async function main() {
+  loadDotEnv(process.cwd());
+
   const { printMode, printQuery, autoApprove, resumeSessionId } = parseArgs(
     process.argv,
   );
